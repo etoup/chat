@@ -93,16 +93,21 @@ jobs:
         run: cargo install tauri-cli
       - name: Build Tauri app (Windows)
         run: cargo tauri build --verbose
-      - name: Install GitHub CLI
-        shell: pwsh
-        run: choco install gh -y
-      - name: Upload Windows MSI
+      - name: Find Windows MSI
+        id: find_msi
         shell: pwsh
         run: |
           $msi = Get-ChildItem -Path ./src-tauri/target/release/bundle/msi/*.msi | Select-Object -First 1
-          gh release upload "${{ github.ref_name }}" "$msi" --repo "${{ github.repository }}"
+          echo "path=$msi" >> $env:GITHUB_OUTPUT
+      - name: Upload Windows MSI
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ${{ steps.find_msi.outputs.path }}
+          asset_name: 悦诉客服_${{ github.ref_name }}_windows.msi
+          asset_content_type: application/octet-stream
 
   build-linux:
     needs: create-release
