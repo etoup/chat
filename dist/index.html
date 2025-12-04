@@ -1,0 +1,77 @@
+<!--
+ * @Author: etoupcom etoupcom@126.com
+ * @Date: 2024-09-05 15:58:41
+ * @LastEditors: etoupcom etoupcom@126.com
+ * @LastEditTime: 2024-09-05 17:53:07
+ * @FilePath: /web/index.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/assets/favicon-b274c251.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>悦诉律服管理系统</title>
+  <style>
+    .outer,
+    .middle,
+    .inner {
+      border: 3px solid transparent;
+      border-top-color: #dedada;
+      border-right-color: #dedada;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+
+    .outer {
+      width: 3.5em;
+      height: 3.5em;
+      margin-left: -1.75em;
+      margin-top: -1.75em;
+      animation: spin 2s linear infinite;
+    }
+
+    .middle {
+      width: 2.1em;
+      height: 2.1em;
+      margin-left: -1.05em;
+      margin-top: -1.05em;
+      animation: spin 1.75s linear reverse infinite;
+    }
+
+    .inner {
+      width: 0.8em;
+      height: 0.8em;
+      margin-left: -0.4em;
+      margin-top: -0.4em;
+      animation: spin 1.5s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/index-8d305a84.js"></script>
+  <link rel="stylesheet" href="/assets/index-bda0cd7c.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="app-loading">
+      <div class="loader">
+        <div class="outer"></div>
+        <div class="middle"></div>
+        <div class="inner"></div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+import{bR as t,bI as a,bJ as n,bN as s}from"./index-8d305a84.js";const _={class:"im-message-unknown"},o={__name:"UnknownMessage",props:{extra:Object,data:Object},setup(e){return(c,p)=>(a(),n("div",_,"["+s(e.data.msg_type)+"] "+s(e.data.msg_type===15?"请到悦诉APP完成支付":"未知消息类型"),1))}},d=t(o,[["__scopeId","data-v-4bf95185"]]);export{d as default};

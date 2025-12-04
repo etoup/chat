@@ -1,0 +1,1 @@
+import{S as c}from"./common-fdac4b74.js";import{r as a,ce as m}from"./index-8d305a84.js";function i(t,s=60){const o=a(0),r=new c(t,s,n=>{o.value=n}),e=()=>r.start();return m(()=>{r.clear()}),{lockTime:o,start:e}}export{i as u};

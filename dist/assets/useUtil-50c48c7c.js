@@ -1,0 +1,1 @@
+import{b6 as i}from"./index-8d305a84.js";function r(){const t=i();if(!t)throw new Error("useUtil must be called in setup function");const o=t.appContext.config.globalProperties.$message,e=t.appContext.config.globalProperties.$dialog,n=t.appContext.config.globalProperties.$notification;return{useMessage:o,useDialog:e,useNotification:n}}export{r as u};
