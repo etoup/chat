@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*.*.*'
 
+permissions:
+  contents: write
+
 env:
   APP_NAME: 悦诉客服
   PNPM_VERSION: 8
