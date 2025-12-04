@@ -50,13 +50,18 @@ jobs:
         run: cargo install tauri-cli
       - name: Build Tauri app (macOS)
         run: cargo tauri build --verbose
+      - name: Find macOS DMG
+        id: find_dmg
+        run: |
+          DMG=$(ls ./src-tauri/target/release/bundle/dmg/*.dmg | head -n 1)
+          echo "path=$DMG" >> $GITHUB_OUTPUT
       - name: Upload macOS DMG
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./src-tauri/target/release/bundle/dmg/悦诉客服_${{ github.ref_name }}_universal.dmg
+          asset_path: ${{ steps.find_dmg.outputs.path }}
           asset_name: 悦诉客服_${{ github.ref_name }}_macos.dmg
           asset_content_type: application/x-apple-diskimage
 
@@ -88,6 +93,9 @@ jobs:
         run: cargo install tauri-cli
       - name: Build Tauri app (Windows)
         run: cargo tauri build --verbose
+      - name: Install GitHub CLI
+        shell: pwsh
+        run: choco install gh -y
       - name: Upload Windows MSI
         shell: pwsh
         run: |
@@ -124,12 +132,17 @@ jobs:
         run: cargo install tauri-cli
       - name: Build Tauri app (Linux)
         run: cargo tauri build --verbose
+      - name: Find Linux AppImage
+        id: find_appimage
+        run: |
+          APPIMAGE=$(ls ./src-tauri/target/release/bundle/appimage/*.AppImage | head -n 1)
+          echo "path=$APPIMAGE" >> $GITHUB_OUTPUT
       - name: Upload Linux AppImage
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ./src-tauri/target/release/bundle/appimage/悦诉客服*.AppImage
+          asset_path: ${{ steps.find_appimage.outputs.path }}
           asset_name: 悦诉客服_${{ github.ref_name }}_linux.AppImage
           asset_content_type: application/octet-stream
