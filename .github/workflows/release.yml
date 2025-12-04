@@ -1,0 +1,135 @@
+name: Release 悦诉客服
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+env:
+  APP_NAME: 悦诉客服
+  PNPM_VERSION: 8
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ env.APP_NAME }} ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+
+  build-macos:
+    needs: create-release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install frontend deps
+        run: pnpm install
+      - name: Build frontend
+        run: pnpm build
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli
+      - name: Build Tauri app (macOS)
+        run: cargo tauri build --verbose
+      - name: Upload macOS DMG
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ./src-tauri/target/release/bundle/dmg/悦诉客服_${{ github.ref_name }}_universal.dmg
+          asset_name: 悦诉客服_${{ github.ref_name }}_macos.dmg
+          asset_content_type: application/x-apple-diskimage
+
+  build-windows:
+    needs: create-release
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install WiX Toolset (required for .msi)
+        run: |
+          winget install -e --id WixToolset.Wix
+          echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
+      - name: Install frontend deps
+        run: pnpm install
+      - name: Build frontend
+        run: pnpm build
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli
+      - name: Build Tauri app (Windows)
+        run: cargo tauri build --verbose
+      - name: Upload Windows MSI
+        shell: pwsh
+        run: |
+          $msi = Get-ChildItem -Path ./src-tauri/target/release/bundle/msi/*.msi | Select-Object -First 1
+          gh release upload "${{ github.ref_name }}" "$msi" --repo "${{ github.repository }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-linux:
+    needs: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install system deps for Tauri
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Install frontend deps
+        run: pnpm install
+      - name: Build frontend
+        run: pnpm build
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli
+      - name: Build Tauri app (Linux)
+        run: cargo tauri build --verbose
+      - name: Upload Linux AppImage
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ./src-tauri/target/release/bundle/appimage/悦诉客服*.AppImage
+          asset_name: 悦诉客服_${{ github.ref_name }}_linux.AppImage
+          asset_content_type: application/octet-stream

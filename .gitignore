@@ -8,9 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-# dist
-# dist_electron
-# dist-ssr
+dist/
+dist-ssr/
+.vite/
+coverage/
+.eslintcache
 *.local
 makefile
 
@@ -24,3 +26,11 @@ makefile
 *.njsproj
 *.sln
 *.sw?
+
+# Env files
+.env*
+!.env.example
+
+# Tauri build outputs
+src-tauri/target/
+src-tauri/gen/
