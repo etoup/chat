@@ -85,9 +85,12 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Install WiX Toolset (required for .msi)
+        shell: pwsh
         run: |
-          winget install -e --id WixToolset.Wix
-          echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $GITHUB_PATH
+          choco install wixtoolset -y --no-progress
+          if (Test-Path "C:\Program Files (x86)\WiX Toolset v3.11\bin") {
+            echo "C:\Program Files (x86)\WiX Toolset v3.11\bin" >> $env:GITHUB_PATH
+          }
       - name: Install frontend deps
         run: pnpm install
       - name: Build frontend
