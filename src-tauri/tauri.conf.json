@@ -1,6 +1,6 @@
 {
   "productName": "悦诉客服",
-  "version": "0.1.7",
+  "version": "1.0.2",
   "identifier": "com.yuesutech.support",
   "build": {
     "beforeDevCommand": "pnpm dev",
