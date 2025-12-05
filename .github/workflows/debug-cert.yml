@@ -7,6 +7,14 @@ jobs:
   debug:
     runs-on: macos-latest
     steps:
+      - name: Debug password length (safe)
+        run: |
+          PW="${{ secrets.APPLE_CERTIFICATE_PASSWORD }}"
+          echo "Password length: ${#PW}"
+          if [ ${#PW} -eq 0 ]; then
+            echo "❗ Password is empty!"
+            exit 1
+          fi
       - name: Decode certificate from secret
         run: |
           printf "%s" "${{ secrets.APPLE_CERTIFICATE }}" | base64 --decode > signing.p12
