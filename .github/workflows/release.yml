@@ -45,6 +45,16 @@ jobs:
           cache: 'pnpm'
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
+      - name: Prepare Apple certificate
+        run: |
+          echo "${{ secrets.APPLE_CERTIFICATE }}" | base64 --decode > signing.p12
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security import signing.p12 -k build.keychain -P "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
+          security list-keychains -s build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -t 3600 -l build.keychain
+        env:
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
       - name: Install frontend deps
         run: pnpm install
       - name: Build frontend
@@ -58,6 +68,16 @@ jobs:
         run: |
           DMG=$(ls ./src-tauri/target/release/bundle/dmg/*.dmg | head -n 1)
           echo "path=$DMG" >> $GITHUB_OUTPUT
+      - name: Notarize DMG
+        run: |
+          xcrun notarytool submit "${{ steps.find_dmg.outputs.path }}" \
+            --apple-id "${{ secrets.APPLE_ID }}" \
+            --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" \
+            --team-id "${{ secrets.APPLE_TEAM_ID }}" \
+            --wait
+      - name: Staple notarization
+        run: |
+          xcrun stapler staple "${{ steps.find_dmg.outputs.path }}"
       - name: Upload macOS DMG
         uses: actions/upload-release-asset@v1
         env:

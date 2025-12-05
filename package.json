@@ -1,7 +1,7 @@
 {
   "name": "悦诉客服",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.7",
   "main": "index.html",
   "scripts": {
     "dev": "vite --mode development",
@@ -11,7 +11,9 @@
     "tauri:build": "tauri build",
     "type-check": "vue-tsc --noEmit -p tsconfig.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "sync:version": "node scripts/sync-version.mjs",
+    "version": "node scripts/sync-version.mjs"
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",

@@ -1,6 +1,6 @@
 {
   "productName": "悦诉客服",
-  "version": "0.1.0",
+  "version": "0.1.7",
   "identifier": "com.yuesutech.support",
   "build": {
     "beforeDevCommand": "pnpm dev",
@@ -9,7 +9,9 @@
     "frontendDist": "../dist"
   },
   "app": {
-    "security": { "csp": null },
+    "security": {
+      "csp": null
+    },
     "windows": [
       {
         "title": "悦诉客服",
