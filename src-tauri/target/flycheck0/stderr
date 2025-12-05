@@ -1,0 +1,105 @@
+   0.179455875s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: stale: missing "/Users/wangcong/Space/yuesu/chat/src-tauri/capabilities"
+   0.200464792s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: false }/TargetInner { ..: lib_target("app_lib", ["lib"], "/Users/wangcong/Space/yuesu/chat/src-tauri/src/lib.rs", Edition2021) }
+   0.200480000s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-5c6447bc80523f1f/lib-app_lib`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   0.203897167s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="build-script-build"}: cargo::core::compiler::fingerprint: fingerprint dirty for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/RunCustomBuild/TargetInner { ..: custom_build_target("build-script-build", "/Users/wangcong/Space/yuesu/chat/src-tauri/build.rs", Edition2021) }
+   0.203906375s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="build-script-build"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(MissingFile("/Users/wangcong/Space/yuesu/chat/src-tauri/capabilities")))
+   0.252095542s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: true }/TargetInner { ..: lib_target("app_lib", ["lib"], "/Users/wangcong/Space/yuesu/chat/src-tauri/src/lib.rs", Edition2021) }
+   0.252106334s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-4478e3b4b8a935fe/test-lib-app_lib`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   0.252830459s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: false }/TargetInner { name: "app", doc: true, ..: with_path("/Users/wangcong/Space/yuesu/chat/src-tauri/src/main.rs", Edition2021) }
+   0.252837125s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-8acc42aca39de10e/bin-app`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   0.253427834s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: true }/TargetInner { name: "app", doc: true, ..: with_path("/Users/wangcong/Space/yuesu/chat/src-tauri/src/main.rs", Edition2021) }
+   0.253431875s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-8a601f6addb16a1b/test-bin-app`
+
+Caused by:
+    No such file or directory (os error 2)
+
+Stack backtrace:
+   0: std::backtrace::Backtrace::create
+   1: std::backtrace::Backtrace::capture
+   2: cargo_util::paths::read_bytes
+   3: cargo_util::paths::read
+   4: cargo::core::compiler::fingerprint::_compare_old_fingerprint
+   5: cargo::core::compiler::fingerprint::prepare_target
+   6: cargo::core::compiler::compile
+   7: <cargo::core::compiler::build_runner::BuildRunner>::compile
+   8: cargo::ops::cargo_compile::compile_ws
+   9: cargo::ops::cargo_compile::compile_with_exec
+  10: cargo::ops::cargo_compile::compile
+  11: cargo::commands::check::exec
+  12: <cargo::cli::Exec>::exec
+  13: cargo::main
+  14: std::sys::backtrace::__rust_begin_short_backtrace::<fn(), ()>
+  15: std::rt::lang_start::<()>::{closure#0}
+  16: std::rt::lang_start_internal
+  17: _main
+   Compiling app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.09s
