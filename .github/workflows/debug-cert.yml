@@ -1,0 +1,29 @@
+name: 🔍 Debug Apple Certificate
+
+on:
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  debug:
+    runs-on: macos-latest
+    steps:
+      - name: Decode certificate from secret
+        run: |
+          printf "%s" "${{ secrets.APPLE_CERTIFICATE }}" | base64 --decode > signing.p12
+          echo "✅ Decoded signing.p12 successfully"
+
+      - name: Check file integrity
+        run: |
+          FILE_SIZE=$(wc -c < signing.p12)
+          SHA256=$(shasum -a 256 signing.p12 | cut -d' ' -f1)
+          echo "📄 File size: $FILE_SIZE bytes"
+          echo "🔑 SHA256: $SHA256"
+
+      - name: Test password with OpenSSL
+        run: |
+          if timeout 5 openssl pkcs12 -in signing.p12 -nokeys -passin "pass:${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" >/dev/null 2>&1; then
+            echo "✅ Password is correct and certificate is valid"
+          else
+            echo "❌ Failed to decrypt — wrong password or corrupted file"
+            exit 1
+          fi
