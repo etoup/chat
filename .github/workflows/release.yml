@@ -47,7 +47,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
       - name: Prepare Apple certificate
         run: |
-          echo "${{ secrets.APPLE_CERTIFICATE }}" | base64 --decode > signing.p12
+          printf "%s" "${{ secrets.APPLE_CERTIFICATE }}" | base64 --decode > signing.p12
           security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
           security import signing.p12 -k build.keychain -P "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
           security list-keychains -s build.keychain

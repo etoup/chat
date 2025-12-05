@@ -1,6 +1,6 @@
-   0.179455875s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: stale: missing "/Users/wangcong/Space/yuesu/chat/src-tauri/capabilities"
-   0.200464792s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: false }/TargetInner { ..: lib_target("app_lib", ["lib"], "/Users/wangcong/Space/yuesu/chat/src-tauri/src/lib.rs", Edition2021) }
-   0.200480000s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-5c6447bc80523f1f/lib-app_lib`
+   0.354157084s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: stale: missing "/Users/wangcong/Space/yuesu/chat/src-tauri/capabilities"
+   0.400848375s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: false }/TargetInner { ..: lib_target("app_lib", ["lib"], "/Users/wangcong/Space/yuesu/chat/src-tauri/src/lib.rs", Edition2021) }
+   0.400872709s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-9783937102f631d2/lib-app_lib`
 
 Caused by:
     No such file or directory (os error 2)
@@ -24,10 +24,10 @@ Stack backtrace:
   15: std::rt::lang_start::<()>::{closure#0}
   16: std::rt::lang_start_internal
   17: _main
-   0.203897167s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="build-script-build"}: cargo::core::compiler::fingerprint: fingerprint dirty for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/RunCustomBuild/TargetInner { ..: custom_build_target("build-script-build", "/Users/wangcong/Space/yuesu/chat/src-tauri/build.rs", Edition2021) }
-   0.203906375s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="build-script-build"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(MissingFile("/Users/wangcong/Space/yuesu/chat/src-tauri/capabilities")))
-   0.252095542s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: true }/TargetInner { ..: lib_target("app_lib", ["lib"], "/Users/wangcong/Space/yuesu/chat/src-tauri/src/lib.rs", Edition2021) }
-   0.252106334s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-4478e3b4b8a935fe/test-lib-app_lib`
+   0.404472959s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="build-script-build"}: cargo::core::compiler::fingerprint: fingerprint dirty for app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri)/RunCustomBuild/TargetInner { ..: custom_build_target("build-script-build", "/Users/wangcong/Space/yuesu/chat/src-tauri/build.rs", Edition2021) }
+   0.404480292s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="build-script-build"}: cargo::core::compiler::fingerprint:     dirty: FsStatusOutdated(StaleItem(MissingFile("/Users/wangcong/Space/yuesu/chat/src-tauri/capabilities")))
+   0.466034084s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: true }/TargetInner { ..: lib_target("app_lib", ["lib"], "/Users/wangcong/Space/yuesu/chat/src-tauri/src/lib.rs", Edition2021) }
+   0.466046375s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app_lib"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-837c971d32b0618c/test-lib-app_lib`
 
 Caused by:
     No such file or directory (os error 2)
@@ -51,8 +51,8 @@ Stack backtrace:
   15: std::rt::lang_start::<()>::{closure#0}
   16: std::rt::lang_start_internal
   17: _main
-   0.252830459s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: false }/TargetInner { name: "app", doc: true, ..: with_path("/Users/wangcong/Space/yuesu/chat/src-tauri/src/main.rs", Edition2021) }
-   0.252837125s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-8acc42aca39de10e/bin-app`
+   0.466777959s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: false }/TargetInner { name: "app", doc: true, ..: with_path("/Users/wangcong/Space/yuesu/chat/src-tauri/src/main.rs", Edition2021) }
+   0.466783292s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-ccd7ad41216bc9bf/bin-app`
 
 Caused by:
     No such file or directory (os error 2)
@@ -76,8 +76,8 @@ Stack backtrace:
   15: std::rt::lang_start::<()>::{closure#0}
   16: std::rt::lang_start_internal
   17: _main
-   0.253427834s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: true }/TargetInner { name: "app", doc: true, ..: with_path("/Users/wangcong/Space/yuesu/chat/src-tauri/src/main.rs", Edition2021) }
-   0.253431875s  INFO prepare_target{force=false package_id=app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-8a601f6addb16a1b/test-bin-app`
+   0.467331250s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint: fingerprint error for app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri)/Check { test: true }/TargetInner { name: "app", doc: true, ..: with_path("/Users/wangcong/Space/yuesu/chat/src-tauri/src/main.rs", Edition2021) }
+   0.467335167s  INFO prepare_target{force=false package_id=app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri) target="app"}: cargo::core::compiler::fingerprint:     err: failed to read `/Users/wangcong/Space/yuesu/chat/src-tauri/target/debug/.fingerprint/app-a38050fab871624f/test-bin-app`
 
 Caused by:
     No such file or directory (os error 2)
@@ -101,5 +101,5 @@ Stack backtrace:
   15: std::rt::lang_start::<()>::{closure#0}
   16: std::rt::lang_start_internal
   17: _main
-   Compiling app v1.0.4 (/Users/wangcong/Space/yuesu/chat/src-tauri)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.09s
+   Compiling app v1.0.6 (/Users/wangcong/Space/yuesu/chat/src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.64s
