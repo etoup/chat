@@ -92,10 +92,55 @@ server {
 - 开发模式：
   - `pnpm tauri:dev`
 - 生产打包：
-  - `pnpm tauri:build`
-  - macOS 输出：`src-tauri/target/release/bundle/macos/悦诉客服.app`
-  - macOS DMG：`src-tauri/target/release/bundle/dmg/悦诉客服_0.0.0_aarch64.dmg`
-  - Windows（在 Windows 环境执行）：`src-tauri/target/release/bundle/nsis/*.exe` 或 `wix/*.msi`
+  - `pnpm tauri:build`（在 Windows 环境执行）
+  - Windows 输出：`src-tauri/target/release/bundle/nsis/*.exe`（NSIS 安装包）或 `wix/*.msi`（MSI 安装包）
+
+### GitHub 分发 Windows 应用
+
+#### 自动构建与发布流程
+1. **配置 GitHub Actions**
+   - 项目已内置 `release.yml` 工作流，支持自动构建和发布
+   - 当推送 `v*.*.*` 格式的标签时，会自动触发构建流程
+   - 构建 Windows 版本，并上传到 GitHub Release
+
+2. **创建版本发布**
+   - 在 GitHub 仓库中创建新的 Release，使用 `v*.*.*` 格式的标签
+   - GitHub Actions 会自动构建应用并上传安装包
+   - Windows 应用会生成两种格式的安装包：
+     - `悦诉客服_v*.*.*_windows.msi`（MSI 安装包）
+     - `悦诉客服_v*.*.*_windows.exe`（NSIS 安装包）
+
+3. **自动更新功能**
+   - 应用内置自动更新功能，会定期检查 GitHub Release 上的新版本
+   - 当检测到新版本时，会自动提示用户更新
+   - 更新配置位于 `src-tauri/tauri.conf.json` 的 `updater` 部分
+
+4. **Windows 用户安装指南**
+   - 访问 GitHub 仓库的 Releases 页面
+   - 下载最新版本的 Windows 安装包（推荐使用 `.exe` 格式）
+   - 双击安装包进行安装
+   - 安装完成后，应用会自动添加到开始菜单
+
+5. **常见问题**
+   - **安装失败**：可能是缺少 Visual C++ 运行时，建议安装最新的 Visual C++ Redistributable
+   - **更新失败**：检查网络连接，确保可以访问 GitHub
+   - **应用无法启动**：尝试以管理员身份运行应用
+
+#### 手动构建 Windows 应用
+如果需要在本地构建 Windows 应用：
+1. 在 Windows 环境中安装依赖：
+   - Node.js 18+
+   - Rust 工具链
+   - WiX Toolset（用于生成 MSI 安装包）
+2. 执行构建命令：
+   ```bash
+   pnpm install
+   pnpm build
+   pnpm tauri build
+   ```
+3. 构建产物位于：
+   - `src-tauri/target/release/bundle/nsis/`（EXE 安装包）
+   - `src-tauri/target/release/bundle/msi/`（MSI 安装包）
 
 ### 迁移说明
 - 删除 `electron/` 目录、`.env.electron`、`src/types/electron.d.ts`

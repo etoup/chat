@@ -29,65 +29,6 @@ jobs:
           draft: false
           prerelease: false
 
-  build-macos:
-    needs: create-release
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'pnpm'
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-      - name: Prepare Apple certificate
-        run: |
-          printf "%s" "${{ secrets.APPLE_CERTIFICATE }}" | base64 --decode > signing.p12
-          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
-          security import signing.p12 -k build.keychain -P "${{ secrets.APPLE_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign
-          security list-keychains -s build.keychain
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
-          security set-keychain-settings -t 3600 -l build.keychain
-        env:
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-      - name: Install frontend deps
-        run: pnpm install
-      - name: Build frontend
-        run: pnpm build
-      - name: Install Tauri CLI
-        run: cargo install tauri-cli
-      - name: Build Tauri app (macOS)
-        run: cargo tauri build --verbose
-      - name: Find macOS DMG
-        id: find_dmg
-        run: |
-          DMG=$(ls ./src-tauri/target/release/bundle/dmg/*.dmg | head -n 1)
-          echo "path=$DMG" >> $GITHUB_OUTPUT
-      - name: Notarize DMG
-        run: |
-          xcrun notarytool submit "${{ steps.find_dmg.outputs.path }}" \
-            --apple-id "${{ secrets.APPLE_ID }}" \
-            --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" \
-            --team-id "${{ secrets.APPLE_TEAM_ID }}" \
-            --wait
-      - name: Staple notarization
-        run: |
-          xcrun stapler staple "${{ steps.find_dmg.outputs.path }}"
-      - name: Upload macOS DMG
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ${{ steps.find_dmg.outputs.path }}
-          asset_name: 悦诉客服_${{ github.ref_name }}_macos.dmg
-          asset_content_type: application/x-apple-diskimage
-
   build-windows:
     needs: create-release
     runs-on: windows-latest
@@ -119,18 +60,31 @@ jobs:
         run: cargo install tauri-cli
       - name: Build Tauri app (Windows)
         run: cargo tauri build --verbose
-      - name: Find Windows MSI
-        id: find_msi
+      - name: Find Windows installers
+        id: find_installers
         shell: pwsh
         run: |
           $msi = Get-ChildItem -Path ./src-tauri/target/release/bundle/msi/*.msi | Select-Object -First 1
-          echo "path=$msi" >> $env:GITHUB_OUTPUT
+          $exe = Get-ChildItem -Path ./src-tauri/target/release/bundle/nsis/*.exe | Select-Object -First 1
+          if ($msi) { echo "msi_path=$msi" >> $env:GITHUB_OUTPUT }
+          if ($exe) { echo "exe_path=$exe" >> $env:GITHUB_OUTPUT }
       - name: Upload Windows MSI
+        if: steps.find_installers.outputs.msi_path != ''
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ${{ steps.find_msi.outputs.path }}
+          asset_path: ${{ steps.find_installers.outputs.msi_path }}
           asset_name: 悦诉客服_${{ github.ref_name }}_windows.msi
+          asset_content_type: application/octet-stream
+      - name: Upload Windows NSIS
+        if: steps.find_installers.outputs.exe_path != ''
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ${{ steps.find_installers.outputs.exe_path }}
+          asset_name: 悦诉客服_${{ github.ref_name }}_windows.exe
           asset_content_type: application/octet-stream
