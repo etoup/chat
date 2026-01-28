@@ -23,7 +23,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "nsis,wix",
+    "targets": "all",
     "windows": {
       "wix": {
         "language": "zh-CN"
@@ -35,14 +35,6 @@
       "icons/128x128@2x.png",
       "icons/icon.ico"
     ]
-  },
-  "updater": {
-    "active": true,
-    "endpoints": [
-      "https://api.github.com/repos/{owner}/{repo}/releases/latest"
-    ],
-    "dialog": true,
-    "pubkey": "your-public-key-here"
   },
   "plugins": {}
 }
