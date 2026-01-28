@@ -25,6 +25,16 @@ jobs:
       - name: Install frontend deps
         run: pnpm install --no-frozen-lockfile
 
+      - name: Create production env file
+        run: |
+          @"
+          ENV = "production"
+          VITE_BASE=/
+          VITE_ROUTER_MODE=history
+          VITE_BASE_API=https://api.yuesutech.com
+          VITE_SOCKET_API=wss://api.yuesutech.com
+          "@ | Out-File -FilePath .env.production -Encoding utf8
+        shell: pwsh
       - name: Build frontend
         run: pnpm build
 

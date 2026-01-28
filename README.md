@@ -90,10 +90,12 @@ server {
 
 ### 开发与打包
 - 开发模式：
-  - `pnpm tauri:dev`
+  - `pnpm tauri:dev`（支持 macOS 和 Windows）
 - 生产打包：
-  - `pnpm tauri:build`（在 Windows 环境执行）
-  - Windows 输出：`src-tauri/target/release/bundle/nsis/*.exe`（NSIS 安装包）或 `wix/*.msi`（MSI 安装包）
+  - **Windows 环境**：`pnpm tauri:build`
+    - 输出：`src-tauri/target/release/bundle/nsis/*.exe`（NSIS 安装包）或 `wix/*.msi`（MSI 安装包）
+  - **macOS 环境**（仅本地开发测试）：`pnpm tauri:build`
+    - 输出：`src-tauri/target/release/bundle/macos/悦诉客服.app`
 
 ### GitHub 分发 Windows 应用
 
@@ -109,6 +111,34 @@ server {
    - Windows 应用会生成两种格式的安装包：
      - `悦诉客服_v*.*.*_windows.msi`（MSI 安装包）
      - `悦诉客服_v*.*.*_windows.exe`（NSIS 安装包）
+
+   ### 两种安装包格式的区别
+   | 特性 | MSI 安装包 | NSIS 安装包 |
+   |------|------------|-------------|
+   | **格式类型** | Windows 官方安装包格式 | 第三方安装包格式 |
+   | **适用场景** | 企业环境、需要高级安装选项 | 个人用户、简单快速安装 |
+   | **安全性** | 更高，支持数字签名验证 | 良好，支持基本验证 |
+   | **安装选项** | 支持自定义安装路径、组件选择 | 支持基本安装选项 |
+   | **卸载功能** | 自动添加到控制面板卸载程序 | 自动添加到控制面板卸载程序 |
+   | **管理员权限** | 通常需要管理员权限 | 可能需要管理员权限 |
+   | **文件大小** | 稍大 | 稍小 |
+   | **推荐用户** | 企业用户、需要严格控制的场景 | 个人用户、普通用户 |
+   | **Windows 版本支持** | Windows XP 及以上 | Windows XP 及以上 |
+
+   ### Windows 版本兼容性
+   - **Windows 11**：完全支持两种格式
+   - **Windows 10**：完全支持两种格式
+   - **Windows 8/8.1**：完全支持两种格式
+   - **Windows 7**：完全支持两种格式
+   - **Windows Vista**：完全支持两种格式
+   - **Windows XP**：完全支持两种格式
+
+   **兼容性结论**：两种安装包格式在 Windows XP 及以上版本均完全支持，没有版本限制。无论用户使用的是 Windows 11 还是更早的 Windows 版本，都可以选择适合自己的安装包格式。
+
+   **选择建议**：
+   - 个人用户：推荐使用 `.exe` 格式，安装过程更简单直观
+   - 企业用户：推荐使用 `.msi` 格式，支持更严格的部署控制
+   - 无特殊需求：两种格式均可使用，功能完全相同
 
 3. **自动更新功能**
    - 应用内置自动更新功能，会定期检查 GitHub Release 上的新版本
