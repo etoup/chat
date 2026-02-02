@@ -1,1 +1,0 @@
-import{w as s,bx as t,cf as r}from"./index-6e6ef021.js";const c=n=>n.length?(s(()=>{for(const e of n)t.subscribe(e.name,e.event)}),r(()=>{for(const e of n)t.unsubscribe(e.name,e.event)}),{emit:(e,o)=>{t.emit(e,o)}}):void 0;export{c as u};

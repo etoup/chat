@@ -424,6 +424,20 @@ function hideMentionDom() {
   }
 }
 
+function onSubscribeSetContent(data: any) {
+  const quill = getQuill()
+  if (!quill) return
+  
+  // 清空编辑器内容
+  quill.setContents([])
+  
+  // 插入新内容
+  quill.insertText(0, data.content)
+  
+  // 设置光标位置到内容末尾
+  quill.setSelection(data.content.length, 0, 'user')
+}
+
 watch(indexName, loadEditorDraftText, { immediate: true })
 
 onMounted(() => {
@@ -439,7 +453,8 @@ onUnmounted(() => {
 
 useEventBus([
   { name: EditorConst.Mention, event: onSubscribeMention },
-  { name: EditorConst.Quote, event: onSubscribeQuote }
+  { name: EditorConst.Quote, event: onSubscribeQuote },
+  { name: EditorConst.SetContent, event: onSubscribeSetContent }
 ])
 </script>
 

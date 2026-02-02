@@ -4,5 +4,6 @@ export const enum ContactConst {
 
 export const enum EditorConst {
   Mention = 'editor:mention',
-  Quote = 'editor:quote'
+  Quote = 'editor:quote',
+  SetContent = 'editor:set-content'
 }

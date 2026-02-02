@@ -14,6 +14,7 @@ import { ITalkRecord } from '@/types/chat'
 import { EditorConst } from '@/constant/event-bus'
 import { useInject, useTalkRecord, useUtil } from '@/hooks'
 import { ServeCollectHandle } from '@/api/user'
+import { ServeTalkMessageInfo } from '@/api/chat'
 
 const talkStore = useTalkStore()
 
@@ -237,6 +238,16 @@ const onGather = (data: ITalkRecord) => {
   item.value = data
 }
 
+const onEditClick = async (data: ITalkRecord) => {
+  const res = await ServeTalkMessageInfo({msg_id: data.msg_id})
+  if (res.code !== 200) {
+    useMessage.error(res.message) 
+  } else {
+    // 将返回的文字消息显示在发送输入框
+    bus.emit(EditorConst.SetContent, { content: res.data || '' })
+  }
+}
+
 const handleSubmit = () => {
   formRef.value.validate(async (errors: any) => {
     if (!errors) {
@@ -356,6 +367,7 @@ onMounted(() => {
             :nickname="item.nickname"
             :talk_type="item.talk_type"
             :datetime="item.created_at"
+            @edit="onEditClick(item)"
           />
         </div>
 

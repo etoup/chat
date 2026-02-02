@@ -1,0 +1,1 @@
+import{bS as s,bJ as t,bK as a,bL as _,bO as c}from"./index-e4844543.js";const o={class:"im-message-system-text"},n={class:"content"},r={__name:"SysTextMessage",props:{extra:Object,data:Object},setup(e){return(d,p)=>(t(),a("div",o,[_("div",n,c(e.extra.content),1)]))}},x=s(r,[["__scopeId","data-v-95669d6e"]]);export{x as default};

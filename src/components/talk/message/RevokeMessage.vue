@@ -23,11 +23,15 @@ defineProps({
     default: ''
   }
 })
+const emit = defineEmits(['edit'])
+const onEdit = () => {
+  emit('edit')
+}
 </script>
 <template>
   <div class="im-message-revoke">
     <div class="content">
-      <span v-if="login_uid == user_id"> 你撤回了一条消息 | {{ formatTime(datetime) }} </span>
+      <span v-if="login_uid == user_id"> 你撤回了一条消息 | {{ formatTime(datetime) }}  | <span class="highlight" @click="onEdit">重新编辑</span></span>
       <span v-else-if="talk_type == 1"> 对方撤回了一条消息 | {{ formatTime(datetime) }} </span>
       <span v-else>
         "{{ nickname }}" 撤回了一条消息 |
@@ -37,6 +41,10 @@ defineProps({
   </div>
 </template>
 <style lang="less" scoped>
+.highlight{
+  color: #1890ff;
+  cursor: pointer;
+}
 .im-message-revoke {
   display: flex;
   justify-content: center;
