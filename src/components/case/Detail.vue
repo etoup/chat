@@ -13,7 +13,9 @@ import { useClipboard } from '@vueuse/core';
 import { useCaseDetailStore, useUserStore } from '@/store';
 import InformationSave from './modules/information-save.vue';
 import Payment from './modules/payment.vue';
+import PaymentLawyer from './modules/payment-lawyer.vue';
 import Transfer from './modules/transfer.vue';
+import Apply from './modules/apply.vue';
 import Close from './modules/close.vue';
 import Refund from './modules/refund.vue';
 import PaymentCode from './modules/payment-code.vue';
@@ -39,6 +41,7 @@ const showModal = ref(false)
 const options = ref([]);
 const paymentCodeData = ref<any>({});
 const paymentCodeVisible = ref(false);
+const applyData = ref<any>({});
 
 async function getOptions() {
     let list: any = []
@@ -50,32 +53,37 @@ async function getOptions() {
             onClick: () => caseDetailStore.setInformationVisible(true)
         }
     })
+    
+    if (userStore.roles.includes('enterprise_admin') || userStore.roles.includes('sale_director') || userStore.roles.includes('mediator')) {
+        list.push({
+          label: '尾款收费',
+          key: 'b',
+          props: {
+              onClick: () => caseDetailStore.setPaymentVisible(true, 3)
+          }
+        })
 
-    list.push({
-        label: '补收尾款',
-        key: 'b',
-        props: {
-            onClick: () => caseDetailStore.setPaymentVisible(true, 3)
-        }
-    })
-
-    list.push({
-        label: '律师收费',
-        key: 'l',
-        props: {
-            onClick: () => caseDetailStore.setPaymentVisible(true, 6)
-        }
-    })
-
-    list.push({
-        label: '诉讼收费',
-        key: 'l',
-        props: {
-            onClick: () => caseDetailStore.setPaymentVisible(true, 7)
-        }
-    })
-
-    if (userStore.roles.includes('enterprise_admin') || userStore.roles.includes('mediator')) {
+        list.push({
+          label: '律师收费',
+          key: 'l',
+          props: {
+              onClick: () => caseDetailStore.setPaymentLawyerVisible(true, 6)
+          }
+        })
+        list.push({
+          label: '诉讼收费',
+          key: 'm',
+          props: {
+              onClick: () => caseDetailStore.setPaymentVisible(true, 7)
+          }
+        })
+        list.push({
+          label: '申请律师',
+          key: 'n',
+          props: {
+              onClick: () => handleApply()
+          }
+        })
         list.push({
           label: '转交督查',
           key: 'c',
@@ -134,6 +142,11 @@ async function getOptions() {
 
 async function handleBack() {
   caseDetailStore.caseCaseTransferBack({id: caseDetailStore.detail.id, relation: 1})
+}
+
+function handleApply() {
+  caseDetailStore.setApplyVisible(true)
+  applyData.value = caseDetailStore.detail
 }
 
 function getFileExtension(url) {
@@ -288,10 +301,6 @@ watch(() => caseDetailStore.detailReload, async (newVal) => {
                       <div v-if="item.status == 2" class="page-main-li-main-dd page-main-li-main-tag page-main-li-c2">
                         {{ item.status_txt }}
                       </div>
-                    </div>
-                    <div v-if="item.status == 2" class="page-main-li-main-dl">
-                      <div class="page-main-li-main-dt">签字内容：</div>
-                      <NImage class="page-image" :src="item.signature_file" />
                     </div>
                     <div v-if="item.status == 2" class="page-main-li-main-dl">
                       <div class="page-main-li-main-dt">签约时间：</div>
@@ -548,7 +557,9 @@ watch(() => caseDetailStore.detailReload, async (newVal) => {
   </NModal>
   <InformationSave v-model:visible="caseDetailStore.informationVisible" :operate-type="caseDetailStore.informationOperateType" />
   <Payment  v-model:visible="caseDetailStore.paymentVisible" />
+  <PaymentLawyer v-model:visible="caseDetailStore.paymentLawyerVisible" />
   <Transfer  v-model:visible="caseDetailStore.superviseVisible" />
+  <Apply  v-model:visible="caseDetailStore.applyVisible" :row-data="applyData" />
   <Close  v-model:visible="caseDetailStore.closeVisible" />
   <Refund v-model:visible="caseDetailStore.refundVisible" />
   <PaymentCode v-model:visible="paymentCodeVisible" :row-data="paymentCodeData" />

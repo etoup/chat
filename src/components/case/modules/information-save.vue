@@ -66,7 +66,7 @@ async function handleSubmit() {
   if (caseDetailStore.transferDetail.id > 0) {
     caseDetailStore.caseTransferComponentSave({...model, enterprise_case_id: caseDetailStore.detail.id, type: 1})
   } else {
-    caseDetailStore.caseComponentSave({...model, enterprise_case_id: caseDetailStore.detail.id, type: 1})
+    caseDetailStore.caseComponentSave({...model, enterprise_case_id: caseDetailStore.detail.id, type: 1, hidden: model.hidden ? 2 : 1 })
   }
   
 }

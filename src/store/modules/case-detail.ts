@@ -1,6 +1,6 @@
 
 import { defineStore } from 'pinia'
-import { ServeCaseDetail, ServeCaseRecordList, ServeCaseInformationList, ServeCaseSignList, ServeCaseComponentSave, ServeCaseBalanceOrder, ServeCaseSupervise, ServeCaseClose, ServeCaseTransferBack, ServeCaseRefund, ServeCaseTransferDetail, ServeCaseTransferComponentSave, ServeCaseOrderItems } from '@/api/user';
+import { ServeCaseDetail, ServeCaseRecordList, ServeCaseInformationList, ServeCaseSignList, ServeCaseComponentSave, ServeCaseBalanceOrder, ServeCaseSupervise, ServeCaseClose, ServeCaseTransferBack, ServeCaseRefund, ServeCaseTransferDetail, ServeCaseTransferComponentSave, ServeCaseOrderItems, ServeCaseLawyerOrder } from '@/api/user';
 
 export const useCaseDetailStore = defineStore('case-detail', {
     state: () => {
@@ -12,8 +12,10 @@ export const useCaseDetailStore = defineStore('case-detail', {
             informationVisible: false,
             informationReload: false,
             paymentVisible: false,
+            paymentLawyerVisible: false,
             detailReload: false,
             superviseVisible: false,
+            applyVisible: false,
             closeVisible: false,
             refundVisible: false,
             orderReload: false,
@@ -39,8 +41,15 @@ export const useCaseDetailStore = defineStore('case-detail', {
             this.paymentVisible = e
             this.type = t
         },
+        setPaymentLawyerVisible(e, t) {
+            this.paymentLawyerVisible = e
+            this.type = t
+        },
         setSuperviseVisible(e) {
             this.superviseVisible = e
+        },
+        setApplyVisible(e) {
+            this.applyVisible = e
         },
         setCloseVisible(e) {
             this.closeVisible = e
@@ -126,6 +135,17 @@ export const useCaseDetailStore = defineStore('case-detail', {
             const res = await ServeCaseBalanceOrder(e)
             if (res.code === 200) {
                 this.paymentVisible = false
+                this.detailReload = true
+                window['$message'].success("提交成功")
+            } else {
+                window['$message'].error(res.message);
+            }
+        },
+         async caseLawyerOrderSave(e) {
+            const res = await ServeCaseLawyerOrder(e)
+            if (res.code === 200) {
+                this.paymentLawyerVisible = false
+                this.detailReload = true
                 window['$message'].success("提交成功")
             } else {
                 window['$message'].error(res.message);

@@ -59,7 +59,7 @@ export const ServeCaseOrderItems = (data = {}) => {
 }
 
 export const ServeCaseInformationList = (data = {}) => {
-  return get('/api/v1/user/informationList', data)
+  return get('/api/v1/user/informationAllList', data)
 }
 
 export const ServeCaseRecordList = (data = {}) => {
@@ -98,9 +98,24 @@ export const ServeProgressItemSelect = (data = {}) => {
   return get('/api/v1/user/progressItemSelect', data)
 }
 
+export const ServeCaseCategory = (data = {}) => {
+  return get('/api/v1/enterprise/case/category', data)
+}
+
+export const ServeCaseCategoryItem = (data = {}) => {
+  return post('/api/v1/enterprise/case/category/item', data)
+}
+
+export const ServeLawyerCaseDataSave = (data = {}) => {
+  return post('/api/v1/law/firm/lawyer/case/data/save', data)
+}
 
 export const ServeCaseBalanceOrder = (data = {}) => {
   return post('/api/v1/enterprise/case/balanceOrder', data)
+}
+
+export const ServeCaseLawyerOrder = (data = {}) => {
+  return post('/api/v1/enterprise/case/lawyer/order', data)
 }
 
 export const ServeCaseDepartments = (data = {}) => {
